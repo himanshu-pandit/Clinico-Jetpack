@@ -1,0 +1,299 @@
+{
+  "project_info": {
+    "project_number": "585761476300",
+    "firebase_url": "https://elabassistlogistics-default-rtdb.firebaseio.com",
+    "project_id": "elabassistlogistics",
+    "storage_bucket": "elabassistlogistics.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585761476300:android:6eeb2516b7e233c9ae3c69",
+        "android_client_info": {
+          "package_name": "com.bluepearl.detectdiagnostics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKfD1V6VSEe8XjT__Cw4M7NTEfaJ6E_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "585761476300-nvqudstnl6mdp1djskf3glm9q3b3qjsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluepearl.clinico"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585761476300:android:f2e2b02e3a10081fae3c69",
+        "android_client_info": {
+          "package_name": "com.bluepearl.driverapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKfD1V6VSEe8XjT__Cw4M7NTEfaJ6E_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "585761476300-nvqudstnl6mdp1djskf3glm9q3b3qjsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluepearl.clinico"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585761476300:android:a4a21a149c3c9e3dae3c69",
+        "android_client_info": {
+          "package_name": "com.bluepearl.elablogistics"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKfD1V6VSEe8XjT__Cw4M7NTEfaJ6E_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "585761476300-nvqudstnl6mdp1djskf3glm9q3b3qjsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluepearl.clinico"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585761476300:android:1a07abf22634d979ae3c69",
+        "android_client_info": {
+          "package_name": "com.bluepearl.kanherelab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKfD1V6VSEe8XjT__Cw4M7NTEfaJ6E_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "585761476300-nvqudstnl6mdp1djskf3glm9q3b3qjsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluepearl.clinico"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585761476300:android:6436323ebc16398bae3c69",
+        "android_client_info": {
+          "package_name": "com.bluepearl.riderapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKfD1V6VSEe8XjT__Cw4M7NTEfaJ6E_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "585761476300-nvqudstnl6mdp1djskf3glm9q3b3qjsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluepearl.clinico"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585761476300:android:e4833b3e6e079b88ae3c69",
+        "android_client_info": {
+          "package_name": "com.bluepearl.trimurtidiagno"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKfD1V6VSEe8XjT__Cw4M7NTEfaJ6E_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "585761476300-nvqudstnl6mdp1djskf3glm9q3b3qjsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluepearl.clinico"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585761476300:android:70a0c196a3f6c329ae3c69",
+        "android_client_info": {
+          "package_name": "com.clinicodiag"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKfD1V6VSEe8XjT__Cw4M7NTEfaJ6E_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "585761476300-nvqudstnl6mdp1djskf3glm9q3b3qjsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluepearl.clinico"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585761476300:android:f7e1c8ccb91b90c7ae3c69",
+        "android_client_info": {
+          "package_name": "com.clinicodiagnostic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqKfD1V6VSEe8XjT__Cw4M7NTEfaJ6E_k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585761476300-7lkkhon7mof1eru6m8fo8gktns8o3jbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "585761476300-nvqudstnl6mdp1djskf3glm9q3b3qjsv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bluepearl.clinico"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
