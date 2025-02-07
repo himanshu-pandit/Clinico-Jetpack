@@ -1,4 +1,4 @@
-package com.bluepearl.detectdiagnostics.ui.theme
+package com.clinicodiagnostic.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.bluepearl.detectdiagnostics
+package com.clinicodiagnostic
 
 import org.junit.Test
 

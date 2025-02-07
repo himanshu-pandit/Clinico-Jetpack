@@ -1,9 +1,9 @@
-package com.bluepearl.detectdiagnostics
+package com.clinicodiagnostic.utils.services
 
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
-class FirebaseService : FirebaseMessagingService() {
+class FCMService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)

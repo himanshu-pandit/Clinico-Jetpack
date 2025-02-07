@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.bluepearl.detectdiagnostics"
+    namespace = "com.clinicodiagnostic"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.bluepearl.detectdiagnostics"
+        applicationId = "com.clinicodiagnostic"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -62,6 +62,10 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.bom)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.runtime.livedata)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
