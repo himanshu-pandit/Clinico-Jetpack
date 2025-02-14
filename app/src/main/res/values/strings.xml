@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">FCM Notification</string>
+    <string name="notification_permission_message">Stay informed with order updates, promotional offers, and platform communication.</string>
+    <string name="notification_permission_title">Push Notifications</string>
+    <string name="notification_permission_allow">Allow Notification</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="notification_permission_granted">Notification permission granted!</string>
+    <string name="notification_permission_denied">Notification permission denied!</string>
+    <string name="clinico_tagline">Your trusted health partner</string>
+    <string name="plc_mobile_number">Enter you mobile number</string>
+    <string name="phone_number_sharing">Phone Number Sharing</string>
+    <string name="enable_phone_number_sharing_for_better_service">Enable phone number sharing for better service.</string>
+    <string name="open_setting">Open Setting</string>
+    <string name="logging_agree">By logging in you agree to the</string>
+    <string name="terms_condition"><![CDATA[" Terms & Condition"]]></string>
 </resources>

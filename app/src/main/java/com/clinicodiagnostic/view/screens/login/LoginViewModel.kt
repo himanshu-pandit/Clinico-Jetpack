@@ -3,31 +3,41 @@ package com.clinicodiagnostic.view.screens.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.clinicodiagnostic.R
+import com.clinicodiagnostic.utils.ClinicoPager
 
 class LoginViewModel: ViewModel() {
 
-    private val _username = MutableLiveData<String>()
-    val username: LiveData<String> get() = _username
+    private val _homePager = MutableLiveData(listOf(
+        ClinicoPager(R.drawable.clinico_login),
+        ClinicoPager(R.drawable.clinico_login),
+        ClinicoPager(R.drawable.clinico_login),
+        ClinicoPager(R.drawable.clinico_login),
+    ))
+    val homePager: LiveData<List<ClinicoPager>> get() = _homePager
 
-    private val _password = MutableLiveData<String>()
-    val password: LiveData<String> get() = _password
+    private val _numberCode = MutableLiveData<String>("")
+    val numberCode: LiveData<String> get() = _numberCode
 
-    private val _permissionAlert = MutableLiveData<Boolean>()
+    private val _number = MutableLiveData<String>("")
+    val number: LiveData<String> get() = _number
+
+    private val _permissionAlert = MutableLiveData<Boolean>(false)
     val permissionAlert: LiveData<Boolean> get() = _permissionAlert
 
-    fun setUserName(user: String){
-        _username.postValue(user)
+    fun setNumberCode(code: String){
+        _numberCode.postValue(code)
     }
 
-    fun setPassword(pass: String){
-        _password.postValue(pass)
+    fun setNumber(number: String) {
+        _number.postValue(number)
     }
 
     fun setPermissionAlert(alert: Boolean){
         _permissionAlert.postValue(alert)
     }
 
-    fun checkLogin(username: String, password: String) {
+    fun generateOTP(number: String) {
 
     }
 

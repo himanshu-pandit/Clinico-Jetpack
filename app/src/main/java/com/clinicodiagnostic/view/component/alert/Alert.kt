@@ -1,4 +1,4 @@
-package com.clinicodiagnostic.view.component.Alert
+package com.clinicodiagnostic.view.component.alert
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.AlertDialog
