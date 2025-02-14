@@ -1,15 +1,10 @@
 package com.clinicodiagnostic.view.screens.login
 
 import android.app.Activity
-import android.app.PendingIntent
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
 import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -37,6 +32,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -44,13 +40,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -70,15 +67,15 @@ import androidx.compose.ui.text.withLink
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.clinicodiagnostic.R
 import com.clinicodiagnostic.utils.AppVersion
 import com.clinicodiagnostic.utils.Constant
+import com.clinicodiagnostic.utils.ValidationUtils
+import com.clinicodiagnostic.view.component.AppLogo
 import com.clinicodiagnostic.view.component.alert.Alert
 import com.clinicodiagnostic.view.component.countrycode.CountryCodePicker
-import com.google.android.gms.auth.api.identity.GetPhoneNumberHintIntentRequest
 import com.google.android.gms.auth.api.identity.Identity
 
 @Composable
@@ -96,6 +93,7 @@ fun LoginScreen(navHostController: NavHostController){
     val permissionAlert by loginViewModel.permissionAlert.observeAsState(false)
     val pagerState = rememberPagerState(pageCount = { 4 })
     val focusRequester = remember { FocusRequester() }
+    var validNumber by remember { mutableStateOf<String?>(null) }
     val loggingAgree = stringResource(R.string.logging_agree)
     val termsCondition = stringResource(R.string.terms_condition)
     val annotatedString: AnnotatedString = remember {
@@ -126,59 +124,13 @@ fun LoginScreen(navHostController: NavHostController){
         }
     }
 
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission(),
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            Toast.makeText(context, R.string.notification_permission_granted, Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, R.string.notification_permission_denied, Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    val request: GetPhoneNumberHintIntentRequest = GetPhoneNumberHintIntentRequest.builder().build()
-    val phoneNumberHintIntentResultLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+    val hintIntentResultLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
         try {
             val phoneNumber = Identity.getSignInClient(activity!!).getPhoneNumberFromIntent(result.data)
             Log.d("PhoneNumber Launcher", phoneNumber)
             loginViewModel.setNumber(phoneNumber.drop(3))
         } catch(e: Exception) {
             Log.e("PhoneNumber Launcher", "Phone Number Hint failed")
-        }
-    }
-
-
-    fun getPhoneHintIntent() {
-        Identity.getSignInClient(context)
-            .getPhoneNumberHintIntent(request)
-            .addOnSuccessListener { result: PendingIntent ->
-                try {
-                    phoneNumberHintIntentResultLauncher.launch(
-                        IntentSenderRequest.Builder(result).build()
-                    )
-                } catch (e: Exception) {
-                    Log.e("PhoneHintIntent", "Launching the PendingIntent failed $e")
-                }
-            }
-            .addOnFailureListener {
-                Log.e("PhoneHintIntent", "${it.message}")
-            }
-    }
-
-
-    LaunchedEffect (Unit){
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) ==
-                PackageManager.PERMISSION_GRANTED
-            ) {
-                // FCM SDK can post notifications.
-                Toast.makeText(context, R.string.notification_permission_granted, Toast.LENGTH_SHORT).show()
-            } else if (activity?.shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS) == true) {
-                loginViewModel.setPermissionAlert(true)
-            } else {
-                // Directly ask for the permission
-                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
-            }
         }
     }
 
@@ -202,6 +154,12 @@ fun LoginScreen(navHostController: NavHostController){
         )
     }
 
+    LaunchedEffect (Unit){
+        loginViewModel.requestPhoneHint(context, hintIntentResultLauncher)
+    }
+
+    RequestNotificationPermission(loginViewModel)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -219,15 +177,7 @@ fun LoginScreen(navHostController: NavHostController){
                 modifier = Modifier.widthIn(max = 600.dp)
             ){
 
-                Image(
-                    painter = painterResource(R.drawable.clinico_logo),
-                    contentDescription = "clinico_logo",
-                    alignment = Alignment.Center,
-                    modifier = Modifier
-                        .size(180.dp)
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                )
+                AppLogo()
 
                 HorizontalPager(
                     state = pagerState,
@@ -293,9 +243,8 @@ fun LoginScreen(navHostController: NavHostController){
                     OutlinedTextField(
                         value = number,
                         onValueChange = {
-                            if(it.length <= 10){
-                                loginViewModel.setNumber(it)
-                            }
+                            loginViewModel.setNumber(it)
+                            validNumber = ValidationUtils.validateMobileNumber(number)
                         },
                         leadingIcon = {
                             Icon(Icons.Default.Call, contentDescription = "call")
@@ -314,18 +263,21 @@ fun LoginScreen(navHostController: NavHostController){
                             }
                         ),
                         singleLine = true,
+                        isError = validNumber != null,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 12.dp)
                             .focusRequester(focusRequester)
-                            .onFocusChanged {
+                            /*.onFocusChanged {
                                 if (it.isFocused) {
                                     getPhoneHintIntent()
                                 }
-                            },
+                            },*/
                     )
                 }
-
+                validNumber?.let {
+                    Text(it, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+                }
                 OutlinedButton(
                     onClick = {
                         //loginViewModel.generateOTP(number)
@@ -344,11 +296,6 @@ fun LoginScreen(navHostController: NavHostController){
             }
         }
 
-        Text(text = "Version $appVersion", textAlign = TextAlign.Center, modifier = Modifier.padding(8.dp))
+        Text(text = "Version$appVersion", textAlign = TextAlign.Center, modifier = Modifier.padding(8.dp), fontSize = 14.sp)
     }
-
 }
-
-
-
-
