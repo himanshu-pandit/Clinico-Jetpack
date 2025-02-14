@@ -44,9 +44,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -76,6 +74,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.clinicodiagnostic.R
+import com.clinicodiagnostic.utils.AppVersion
 import com.clinicodiagnostic.utils.Constant
 import com.clinicodiagnostic.view.component.alert.Alert
 import com.clinicodiagnostic.view.component.countrycode.CountryCodePicker
@@ -89,6 +88,7 @@ fun LoginScreen(navHostController: NavHostController){
     val activity = context as? Activity
     val scrollState = rememberScrollState()
     val focusManager = LocalFocusManager.current
+    val appVersion = remember { AppVersion.getAppVersion(context) }
     val loginViewModel: LoginViewModel = viewModel()
     val pager by loginViewModel.homePager.observeAsState(emptyList())
     val numberCode by loginViewModel.numberCode.observeAsState("+91")
@@ -208,138 +208,145 @@ fun LoginScreen(navHostController: NavHostController){
             .padding(16.dp)
             .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
     ) {
 
         Column (
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.widthIn(max = 600.dp)
+            modifier = Modifier.fillMaxSize().weight(1f),
+            verticalArrangement = Arrangement.Center
         ){
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.widthIn(max = 600.dp)
+            ){
 
-            Image(
-                painter = painterResource(R.drawable.clinico_logo),
-                contentDescription = "clinico_logo",
-                alignment = Alignment.Center,
-                modifier = Modifier
-                    .size(180.dp)
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-            )
-
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.fillMaxWidth()
-            ) { page ->
                 Image(
-                    painter = painterResource(pager[page].image),
-                    contentDescription = "clinico_login",
+                    painter = painterResource(R.drawable.clinico_logo),
+                    contentDescription = "clinico_logo",
                     alignment = Alignment.Center,
                     modifier = Modifier
+                        .size(180.dp)
                         .fillMaxWidth()
-                        .padding(4.dp)
-                        .clip(RoundedCornerShape(4.dp))
+                        .wrapContentHeight()
                 )
-            }
 
-            Row(
-                Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(bottom = 36.dp),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                repeat(pagerState.pageCount) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
-                    Box(
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.fillMaxWidth()
+                ) { page ->
+                    Image(
+                        painter = painterResource(pager[page].image),
+                        contentDescription = "clinico_login",
+                        alignment = Alignment.Center,
                         modifier = Modifier
-                            .padding(2.dp)
-                            .clip(CircleShape)
-                            .background(color)
-                            .size(16.dp)
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                            .clip(RoundedCornerShape(4.dp))
                     )
                 }
-            }
-        }
 
-        Column (
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.widthIn(max = 600.dp)
-        ){
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp, 4.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-
-                Box(
-                    modifier = Modifier
-                        .height(54.dp)
-                        .border(
-                            BorderStroke(1.dp, Color.DarkGray),
-                            shape = RoundedCornerShape(4.dp)
-                        ),
-                    contentAlignment = Alignment.Center
-                ){
-                    CountryCodePicker { newCode ->
-                        loginViewModel.setNumberCode(newCode)
+                Row(
+                    Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth()
+                        .padding(bottom = 36.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    repeat(pagerState.pageCount) { iteration ->
+                        val color = if (pagerState.currentPage == iteration) Color.DarkGray else Color.LightGray
+                        Box(
+                            modifier = Modifier
+                                .padding(2.dp)
+                                .clip(CircleShape)
+                                .background(color)
+                                .size(16.dp)
+                        )
                     }
                 }
+            }
 
-                OutlinedTextField(
-                    value = number,
-                    onValueChange = {
-                        if(it.length <= 10){
-                            loginViewModel.setNumber(it)
-                        }
-                    },
-                    leadingIcon = {
-                        Icon(Icons.Default.Call, contentDescription = "call")
-                    },
-                    placeholder = {
-                        Text(stringResource(R.string.plc_mobile_number), maxLines = 1, overflow = TextOverflow.Ellipsis)
-                    },
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Phone,
-                        imeAction = ImeAction.Done
-                    ),
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            focusManager.clearFocus()
-                            loginViewModel.generateOTP(number)
-                        }
-                    ),
-                    singleLine = true,
+            Column (
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.widthIn(max = 600.dp)
+            ){
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 12.dp)
-                        .focusRequester(focusRequester)
-                        .onFocusChanged {
-                            if (it.isFocused) {
-                                getPhoneHintIntent()
+                        .padding(12.dp, 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Box(
+                        modifier = Modifier
+                            .height(54.dp)
+                            .border(
+                                BorderStroke(1.dp, Color.DarkGray),
+                                shape = RoundedCornerShape(4.dp)
+                            ),
+                        contentAlignment = Alignment.Center
+                    ){
+                        CountryCodePicker { newCode ->
+                            loginViewModel.setNumberCode(newCode)
+                        }
+                    }
+
+                    OutlinedTextField(
+                        value = number,
+                        onValueChange = {
+                            if(it.length <= 10){
+                                loginViewModel.setNumber(it)
                             }
                         },
-                )
-            }
+                        leadingIcon = {
+                            Icon(Icons.Default.Call, contentDescription = "call")
+                        },
+                        placeholder = {
+                            Text(stringResource(R.string.plc_mobile_number), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                        },
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Phone,
+                            imeAction = ImeAction.Done
+                        ),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                focusManager.clearFocus()
+                                loginViewModel.generateOTP(number)
+                            }
+                        ),
+                        singleLine = true,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 12.dp)
+                            .focusRequester(focusRequester)
+                            .onFocusChanged {
+                                if (it.isFocused) {
+                                    getPhoneHintIntent()
+                                }
+                            },
+                    )
+                }
 
-            OutlinedButton(
-                onClick = {
-                    //loginViewModel.generateOTP(number)
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(12.dp, 4.dp),
-                shape = RoundedCornerShape(4.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.login),
-                )
-            }
+                OutlinedButton(
+                    onClick = {
+                        //loginViewModel.generateOTP(number)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(12.dp, 4.dp),
+                    shape = RoundedCornerShape(4.dp)
+                ) {
+                    Text(
+                        text = stringResource(R.string.login),
+                    )
+                }
 
-            Text(text = annotatedString, textAlign = TextAlign.Center, modifier = Modifier.padding(8.dp))
+                Text(text = annotatedString, textAlign = TextAlign.Center, modifier = Modifier.padding(8.dp))
+            }
         }
+
+        Text(text = "Version $appVersion", textAlign = TextAlign.Center, modifier = Modifier.padding(8.dp))
     }
+
 }
 
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FCM Notification</string>
+    <string name="app_name">Clinico</string>
     <string name="notification_permission_message">Stay informed with order updates, promotional offers, and platform communication.</string>
     <string name="notification_permission_title">Push Notifications</string>
     <string name="notification_permission_allow">Allow Notification</string>
