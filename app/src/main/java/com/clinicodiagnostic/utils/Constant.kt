@@ -6,5 +6,10 @@ object Constant {
 
     const val TERMS_CONDITION = "http://clinico.elabassist.com/Account/TermsAndConditions.aspx"
 
+    const val SUPPORT_BASE_URL = "https://elabcorpsupport.elabassist.com/Services/"
+
+    const val LIVE_URL = "http://clinicotest.elabassist.com/Services/"
+
+    const val LAB_ID = "156462d6-606c-4fa2-a45e-5b0696a4aae3"
 
 }
