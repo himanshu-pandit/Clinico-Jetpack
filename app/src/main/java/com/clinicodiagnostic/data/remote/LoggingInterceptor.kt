@@ -13,7 +13,7 @@ class LoggingInterceptor: Interceptor{
 
         val request:Request = chain.request()
 
-        val t1 = System.nanoTime()
+        val t1 = System.currentTimeMillis()
         logger.info(
             String.format(
                 "Sending request %s on %s%n%s",
@@ -25,7 +25,7 @@ class LoggingInterceptor: Interceptor{
 
         val response: Response = chain.proceed(request)
 
-        val t2 = System.nanoTime()
+        val t2 = System.currentTimeMillis()
         logger.info(
             String.format(
                 "Received response for %s in %.1fms%n%s",

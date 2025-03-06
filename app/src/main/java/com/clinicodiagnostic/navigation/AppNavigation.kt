@@ -1,5 +1,6 @@
 package com.clinicodiagnostic.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,8 +16,10 @@ fun AppNavigation(controller: NavHostController){
         composable(route = Screen.Login.route) {
             LoginScreen(controller)
         }
-        composable(route = Screen.OTP.route) {
-            OTPScreen(controller)
+        composable(route = Screen.OTP.route) {backStackEntry ->
+            val number = backStackEntry.arguments?.getString("otpNumber") ?: ""
+            Log.d("AppNavigation", number)
+            OTPScreen(controller, number)
         }
         composable(route = Screen.Home.route){
             HomeSceeen(controller)

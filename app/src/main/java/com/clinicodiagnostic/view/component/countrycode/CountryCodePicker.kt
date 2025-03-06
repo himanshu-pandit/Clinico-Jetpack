@@ -13,7 +13,7 @@ import com.clinicodiagnostic.R
 import com.hbb20.CountryCodePicker
 
 @Composable
-fun CountryCodePicker(onCountryChange: (String) -> Unit) {
+fun CountryCodePicker(defaultCode: String, onCountryChange: (String) -> Unit) {
     Row (
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceEvenly
@@ -26,10 +26,15 @@ fun CountryCodePicker(onCountryChange: (String) -> Unit) {
                     setShowPhoneCode(false)
                     showNameCode(false)
                     showFlag(true)
+                    setDefaultCountryUsingNameCode(defaultCode)
                     setNumberAutoFormattingEnabled(true)
                     setArrowSize(16)
+                    // Send the default country code when initialized
+                    post{
+                        onCountryChange(selectedCountryCode)
+                    }
                     setOnCountryChangeListener {
-                        onCountryChange(selectedCountryCodeWithPlus)
+                        onCountryChange(selectedCountryCode)
                     }
                 }
             },

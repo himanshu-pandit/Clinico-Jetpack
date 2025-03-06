@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.provider.Settings
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -31,8 +32,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -70,9 +71,10 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.clinicodiagnostic.R
+import com.clinicodiagnostic.navigation.Screen
 import com.clinicodiagnostic.utils.AppVersion
 import com.clinicodiagnostic.utils.Constant
-import com.clinicodiagnostic.utils.ValidationUtils
+import com.clinicodiagnostic.utils.NetworkResult
 import com.clinicodiagnostic.view.component.AppLogo
 import com.clinicodiagnostic.view.component.alert.Alert
 import com.clinicodiagnostic.view.component.countrycode.CountryCodePicker
@@ -88,9 +90,9 @@ fun LoginScreen(navHostController: NavHostController){
     val appVersion = remember { AppVersion.getAppVersion(context) }
     val loginViewModel: LoginViewModel = viewModel()
     val pager by loginViewModel.homePager.observeAsState(emptyList())
-    val numberCode by loginViewModel.numberCode.observeAsState("+91")
-    val number by loginViewModel.number.observeAsState("")
+    val numberCode by loginViewModel.numberCode.observeAsState("")
     val permissionAlert by loginViewModel.permissionAlert.observeAsState(false)
+    var isLoading by remember { mutableStateOf(false) }
     val pagerState = rememberPagerState(pageCount = { 4 })
     val focusRequester = remember { FocusRequester() }
     var validNumber by remember { mutableStateOf<String?>(null) }
@@ -128,7 +130,7 @@ fun LoginScreen(navHostController: NavHostController){
         try {
             val phoneNumber = Identity.getSignInClient(activity!!).getPhoneNumberFromIntent(result.data)
             Log.d("PhoneNumber Launcher", phoneNumber)
-            loginViewModel.setNumber(phoneNumber.drop(3))
+            loginViewModel.updateMobileNumber(phoneNumber.drop(3))
         } catch(e: Exception) {
             Log.e("PhoneNumber Launcher", "Phone Number Hint failed")
         }
@@ -154,7 +156,7 @@ fun LoginScreen(navHostController: NavHostController){
         )
     }
 
-    LaunchedEffect (Unit){
+    LaunchedEffect (Unit) {
         loginViewModel.requestPhoneHint(context, hintIntentResultLauncher)
     }
 
@@ -169,7 +171,9 @@ fun LoginScreen(navHostController: NavHostController){
     ) {
 
         Column (
-            modifier = Modifier.fillMaxSize().weight(1f),
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(1f),
             verticalArrangement = Arrangement.Center
         ){
             Column (
@@ -235,16 +239,15 @@ fun LoginScreen(navHostController: NavHostController){
                             ),
                         contentAlignment = Alignment.Center
                     ){
-                        CountryCodePicker { newCode ->
-                            loginViewModel.setNumberCode(newCode)
+                        CountryCodePicker("91") { selectedCode ->
+                            loginViewModel.setNumberCode(selectedCode)
                         }
                     }
 
                     OutlinedTextField(
-                        value = number,
+                        value = loginViewModel.mobileNumber,
                         onValueChange = {
-                            loginViewModel.setNumber(it)
-                            validNumber = ValidationUtils.validateMobileNumber(number)
+                            loginViewModel.updateMobileNumber(it)
                         },
                         leadingIcon = {
                             Icon(Icons.Default.Call, contentDescription = "call")
@@ -259,11 +262,42 @@ fun LoginScreen(navHostController: NavHostController){
                         keyboardActions = KeyboardActions(
                             onDone = {
                                 focusManager.clearFocus()
-                                loginViewModel.generateOTP(number)
+                                val mobile = numberCode+loginViewModel.mobileNumber.replace("+", " ")
+                                loginViewModel.generateOTP(mobile){ response ->
+                                    when(response){
+                                        is NetworkResult.Loading ->{
+                                            isLoading = true
+                                        }
+
+                                        is NetworkResult.Failure -> {
+                                            isLoading = false
+                                            Toast.makeText(context, response.message.toString(), Toast.LENGTH_SHORT).show()
+                                        }
+
+                                        is NetworkResult.Success -> {
+                                            isLoading = false
+                                            response.data.let {
+                                                if (it?.loginOtpResponseBody?.result == "Success") {
+                                                    val otpNumber = it.loginOtpResponseBody.userName
+                                                    Log.d("AppNavigation2", otpNumber)
+                                                    navHostController.navigate("${Screen.OTP.route}/$otpNumber")
+                                                }else{
+                                                    Toast.makeText(context,
+                                                        context.getString(R.string.something_went_wrong_please_try_again_later), Toast.LENGTH_SHORT).show()
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         ),
                         singleLine = true,
-                        isError = validNumber != null,
+                        isError = loginViewModel.mobileNumberHasErrors,        //validNumber != null,
+                        supportingText = {
+                            if (loginViewModel.mobileNumberHasErrors){
+                                Text("Incorrect mobile number format.")
+                            }
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(start = 12.dp)
@@ -275,21 +309,51 @@ fun LoginScreen(navHostController: NavHostController){
                             },*/
                     )
                 }
-                validNumber?.let {
-                    Text(it, color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
-                }
                 OutlinedButton(
                     onClick = {
-                        //loginViewModel.generateOTP(number)
+                        val mobile = numberCode+loginViewModel.mobileNumber
+                        loginViewModel.generateOTP(mobile){ response ->
+                            when(response){
+                                is NetworkResult.Loading ->{
+                                    isLoading = true
+                                }
+
+                                is NetworkResult.Failure -> {
+                                    isLoading = false
+                                    Toast.makeText(context, response.message.toString(), Toast.LENGTH_SHORT).show()
+                                }
+
+                                is NetworkResult.Success -> {
+                                    isLoading = false
+                                    response.data.let {
+                                        if (it?.loginOtpResponseBody?.result == "Success") {
+                                            if (it.loginOtpResponseBody.userName != ""){
+                                                val otpNumber = it.loginOtpResponseBody.userName
+                                                Log.d("AppNavigation2", otpNumber)
+                                                navHostController.navigate("otp/$otpNumber")
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp, 4.dp),
                     shape = RoundedCornerShape(4.dp)
                 ) {
-                    Text(
-                        text = stringResource(R.string.login),
-                    )
+                    Row {
+                        if(isLoading){
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(48.dp),
+                            )
+                        }
+                        Text(
+                            text = stringResource(R.string.login),
+                        )
+                    }
+
                 }
 
                 Text(text = annotatedString, textAlign = TextAlign.Center, modifier = Modifier.padding(8.dp))

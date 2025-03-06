@@ -3,7 +3,7 @@ package com.clinicodiagnostic.data.model
 import com.google.gson.annotations.SerializedName
 
 data class LoginOtpRequest(
-    @SerializedName("objSp")
+    @SerializedName("objSP")
     val loginOtpRequestBody: LoginOtpRequestBody
 )
 data class LoginOtpRequestBody(
