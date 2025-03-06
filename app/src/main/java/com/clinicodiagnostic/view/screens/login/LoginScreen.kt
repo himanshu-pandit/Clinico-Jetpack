@@ -95,7 +95,6 @@ fun LoginScreen(navHostController: NavHostController){
     var isLoading by remember { mutableStateOf(false) }
     val pagerState = rememberPagerState(pageCount = { 4 })
     val focusRequester = remember { FocusRequester() }
-    var validNumber by remember { mutableStateOf<String?>(null) }
     val loggingAgree = stringResource(R.string.logging_agree)
     val termsCondition = stringResource(R.string.terms_condition)
     val annotatedString: AnnotatedString = remember {

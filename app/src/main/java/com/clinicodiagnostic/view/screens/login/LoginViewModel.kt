@@ -63,7 +63,6 @@ class LoginViewModel(): ViewModel() {
     }
 
     fun updateMobileNumber(input: String){
-        println("updateMobileNumber $input")
         mobileNumber = input
     }
 
@@ -116,14 +115,6 @@ class LoginViewModel(): ViewModel() {
             .addOnFailureListener {
                 Log.e("PhoneHintIntent", "${it.message}")
             }
-    }
-
-    fun validateNumber(number: String): String? {
-        println("validateMobileNumber $number")
-        if(number.isBlank()) return "Mobile number cannot be empty"
-        if(!number.all { it.isDigit() }) return "Only number allowed"
-        if (number.length != 10) return "Number must be 10 digits"
-        return null
     }
 
 }
