@@ -16,4 +16,5 @@
     <string name="logging_agree">By logging in you agree to the</string>
     <string name="terms_condition"><![CDATA[" Terms & Condition"]]></string>
     <string name="something_went_wrong_please_try_again_later">Something went wrong, Please try again later.</string>
+    <string name="settings_content">Settings Content</string>
 </resources>

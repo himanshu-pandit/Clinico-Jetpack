@@ -1,5 +1,6 @@
 package com.clinicodiagnostic
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,6 +25,7 @@ import com.clinicodiagnostic.utils.ConnectionObserver
 import com.clinicodiagnostic.utils.ConnectionObserverImpl
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import java.util.Locale
 
 
 class MainActivity : ComponentActivity() {
@@ -41,6 +43,7 @@ class MainActivity : ComponentActivity() {
             println("Status : $it")
         }.launchIn(lifecycleScope)
 
+
         setContent {
             FCMNotificationTheme {
 
@@ -51,19 +54,19 @@ class MainActivity : ComponentActivity() {
                 )
 
 
-                Scaffold(
-                    topBar = {
-                        TopAppBar(
-                            title = {
-                                Text("Connection status : $status")
-                            },
-                            colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary)
-                        )
-                    },
-                    modifier = Modifier.fillMaxSize()
-                ) { innerPadding ->
+//                Scaffold(
+//                    topBar = {
+//                        TopAppBar(
+//                            title = {
+//                                Text("Connection status : $status")
+//                            },
+//                            colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary)
+//                        )
+//                    },
+//                    modifier = Modifier.fillMaxSize()
+//                ) { innerPadding ->
                     AppNavigation(navController)
-                }
+//                }
             }
         }
     }

@@ -21,6 +21,7 @@ retrofit = "2.11.0"
 converterGson = "2.11.0"
 okhttp = "5.0.0-alpha.14"
 loggingInterceptor = "5.0.0-alpha.14"
+playServicesAuthApiPhone = "18.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -49,6 +50,7 @@ retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = 
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInterceptor" }
+play-services-auth-api-phone = { group = "com.google.android.gms", name = "play-services-auth-api-phone", version.ref = "playServicesAuthApiPhone" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

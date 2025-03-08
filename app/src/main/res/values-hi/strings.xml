@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">क्लिनिको</string>
+    <string name="notification_permission_message">ऑर्डर अपडेट, प्रचार ऑफ़र और प्लेटफॉर्म संचार के साथ सूचित रहें।</string>
+    <string name="notification_permission_title">पुश नोटिफिकेशन</string>
+    <string name="notification_permission_allow">नोटिफिकेशन की अनुमति दें</string>
+    <string name="username">उपयोगकर्ता नाम</string>
+    <string name="password">पासवर्ड</string>
+    <string name="login">लॉगिन</string>
+    <string name="notification_permission_granted">नोटिफिकेशन अनुमति दी गई!</string>
+    <string name="notification_permission_denied">नोटिफिकेशन अनुमति अस्वीकार की गई!</string>
+    <string name="clinico_tagline">आपका विश्वसनीय स्वास्थ्य साथी</string>
+    <string name="plc_mobile_number">अपना मोबाइल नंबर दर्ज करें</string>
+    <string name="phone_number_sharing">फोन नंबर साझा करना</string>
+    <string name="enable_phone_number_sharing_for_better_service">बेहतर सेवा के लिए फोन नंबर साझा करना सक्षम करें।</string>
+    <string name="open_setting">सेटिंग खोलें</string>
+    <string name="logging_agree">लॉगिन करके, आप सहमत होते हैं</string>
+    <string name="terms_condition"><![CDATA[" नियम और शर्तें"]]></string>
+    <string name="something_went_wrong_please_try_again_later">कुछ गलत हो गया, कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="settings_content">सेटिंग्स सामग्री</string>
+</resources>

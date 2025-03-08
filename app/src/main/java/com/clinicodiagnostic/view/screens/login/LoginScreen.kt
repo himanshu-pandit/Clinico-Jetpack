@@ -291,7 +291,7 @@ fun LoginScreen(navHostController: NavHostController){
                             }
                         ),
                         singleLine = true,
-                        isError = loginViewModel.mobileNumberHasErrors,        //validNumber != null,
+                        isError = loginViewModel.mobileNumberHasErrors,
                         supportingText = {
                             if (loginViewModel.mobileNumberHasErrors){
                                 Text("Incorrect mobile number format.")
@@ -345,7 +345,7 @@ fun LoginScreen(navHostController: NavHostController){
                     Row {
                         if(isLoading){
                             CircularProgressIndicator(
-                                modifier = Modifier.size(48.dp),
+                                modifier = Modifier.size(36.dp),
                             )
                         }
                         Text(

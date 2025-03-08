@@ -12,7 +12,7 @@ import com.clinicodiagnostic.view.screens.login.LoginScreen
 @Composable
 fun AppNavigation(controller: NavHostController){
 
-    NavHost(navController = controller, startDestination = Screen.Login.route){
+    NavHost(navController = controller, startDestination = Screen.Home.route){
         composable(route = Screen.Login.route) {
             LoginScreen(controller)
         }
